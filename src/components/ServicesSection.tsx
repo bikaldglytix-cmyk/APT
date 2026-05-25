@@ -3,7 +3,7 @@ import { supabase, normalizeService } from "@/lib/supabase";
 
 export default async function ServicesSection() {
     const { data } = await supabase.from('services').select('*').order('num', { ascending: true });
-    const services = (data || []).map(normalizeService).filter(Boolean);
+    const services = (data || []).map(normalizeService).filter(Boolean) as any[];
 
     if (services.length === 0) return null;
 

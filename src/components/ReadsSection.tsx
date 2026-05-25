@@ -5,7 +5,7 @@ import { supabase, normalizeArticle } from "@/lib/supabase";
 
 export default async function ReadsSection() {
     const { data } = await supabase.from('blogs').select('*').order('created_at', { ascending: false }).limit(3);
-    const articles = (data || []).map(normalizeArticle).filter(Boolean);
+    const articles = (data || []).map(normalizeArticle).filter(Boolean) as any[];
 
     const featuredArticle = articles[0];
     const sideArticles = articles.slice(1);
