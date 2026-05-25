@@ -79,7 +79,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
                 </div>
 
                 <div className="prose prose-invert prose-lg max-w-none prose-headings:text-[#D4A017] prose-a:text-[#D4A017] hover:prose-a:text-white prose-img:rounded-2xl">
-                    {article.content.split('\n').map((paragraph, idx) => {
+                    {article.content.split('\n').map((paragraph: string, idx: number) => {
                         if (paragraph.startsWith('###')) {
                             return <h3 key={idx} className="text-[24px] font-bold mt-10 mb-4">{paragraph.replace('### ', '')}</h3>;
                         } else if (paragraph.startsWith('-')) {
