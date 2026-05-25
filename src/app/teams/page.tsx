@@ -12,7 +12,7 @@ export const revalidate = 60;
 
 export default async function TeamsPage() {
     const { data } = await supabase.from('teams').select('*').order('created_at', { ascending: true });
-    const members = (data || []).map(normalizeTeamMember).filter(Boolean);
+    const members = (data || []).map(normalizeTeamMember).filter(Boolean) as any[];
 
     const leadership = members.filter(m => m.isLeadership);
     const coreTeam = members.filter(m => !m.isLeadership);

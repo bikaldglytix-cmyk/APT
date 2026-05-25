@@ -16,17 +16,17 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
     // Fetch articles from Supabase
     const { data: blogData } = await supabase.from('blogs').select('slug, created_at');
-    const articles = (blogData || []).map(normalizeArticle).filter(Boolean);
+    const articles = (blogData || []).map(normalizeArticle).filter(Boolean) as any[];
 
     // Fetch news from Supabase
     const { data: newsData } = await supabase.from('news').select('slug, date');
     const newsList = (newsData || []).map(row => ({
         slug: row.slug || '',
         date: row.date ? new Date(row.date) : new Date()
-    })).filter(Boolean);
+    })).filter(Boolean) as any[];
 
     // Dynamic blog routes
-    const blogRoutes = articles.map((article) => ({
+    const blogRoutes = articles.map((article: any) => ({
         url: `${baseUrl}/blogs/${article.slug}`,
         lastModified: new Date(article.date),
         changeFrequency: 'monthly' as const,
@@ -34,7 +34,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }));
 
     // Dynamic news routes
-    const newsRoutes = newsList.map((news) => ({
+    const newsRoutes = newsList.map((news: any) => ({
         url: `${baseUrl}/news/${news.slug}`,
         lastModified: news.date,
         changeFrequency: 'monthly' as const,

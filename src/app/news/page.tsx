@@ -9,7 +9,7 @@ export const revalidate = 60; // ISR: revalidate every 60 seconds
 
 export default async function NewsPage() {
     const { data } = await supabase.from('news').select('*').order('date', { ascending: false });
-    const allNews = (data || []).map(normalizeNews).filter(Boolean);
+    const allNews = (data || []).map(normalizeNews).filter(Boolean) as any[];
 
     const featuredNews = allNews[0];
     const regularNews = allNews.length > 0 && featuredNews ? allNews.slice(1) : [];
@@ -75,7 +75,7 @@ export default async function NewsPage() {
                 <section className="relative w-full bg-[#112419] py-24 sm:py-32 px-6 sm:px-8 border-t border-white/5">
                     <div className="max-w-[1400px] mx-auto relative z-10">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            {regularNews.map((news) => (
+                            {regularNews.map((news: any) => (
                                 <Link href={`/news/${news.slug}`} key={news.id} className="group relative flex flex-col rounded-[24px] overflow-hidden bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] backdrop-blur-xl hover:border-[#D4A017]/40 transition-all duration-500 hover:shadow-[0_20px_50px_-15px_rgba(212,160,23,0.15)] hover:-translate-y-1">
                                     <div className="relative w-full h-[240px] overflow-hidden">
                                         <Image src={news.image} alt={news.title} fill className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105" unoptimized />

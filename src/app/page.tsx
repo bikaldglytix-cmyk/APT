@@ -19,10 +19,10 @@ export const revalidate = 60; // ISR for homepage
 
 export default async function Home() {
   const { data: projectsData } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
-  const projects = (projectsData || []).map(normalizeProject).filter(Boolean);
+  const projects = (projectsData || []).map(normalizeProject).filter(Boolean) as any[];
 
   const { data: partnersData } = await supabase.from('partners').select('*').order('created_at', { ascending: false });
-  const partners = (partnersData || []).map(normalizePartner).filter(Boolean);
+  const partners = (partnersData || []).map(normalizePartner).filter(Boolean) as any[];
 
   return (
     <main className="w-full">

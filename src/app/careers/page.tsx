@@ -16,7 +16,7 @@ export const revalidate = 60;
 
 export default async function CareersPage() {
     const { data } = await supabase.from('careers').select('*').order('created_at', { ascending: false });
-    const positions = (data || []).map(normalizeCareer).filter(Boolean);
+    const positions = (data || []).map(normalizeCareer).filter(Boolean) as any[];
 
     return (
         <main className="min-h-screen bg-black w-full text-white overflow-hidden flex flex-col">

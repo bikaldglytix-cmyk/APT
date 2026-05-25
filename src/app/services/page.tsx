@@ -12,7 +12,7 @@ export const revalidate = 60;
 
 export default async function ServicesPage() {
     const { data } = await supabase.from('services').select('*').order('num', { ascending: true });
-    const services = (data || []).map(normalizeService).filter(Boolean);
+    const services = (data || []).map(normalizeService).filter(Boolean) as any[];
 
     return <ServicesContent services={services} />;
 }

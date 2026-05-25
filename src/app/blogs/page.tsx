@@ -9,7 +9,7 @@ export const revalidate = 60; // ISR: revalidate every 60 seconds
 
 export default async function BlogPage() {
     const { data } = await supabase.from('blogs').select('*').order('created_at', { ascending: false });
-    const articles = (data || []).map(normalizeArticle).filter(Boolean);
+    const articles = (data || []).map(normalizeArticle).filter(Boolean) as any[];
 
     const featuredArticle = articles.find(a => a?.featured) || articles[0];
     const regularArticles = articles.length > 0 && featuredArticle ? articles.filter(a => a?.id !== featuredArticle.id) : [];
@@ -99,7 +99,7 @@ export default async function BlogPage() {
                         <section className="relative w-full bg-[#112419] py-28 sm:py-40 px-6 sm:px-8">
                             <div className="max-w-[1400px] mx-auto relative z-10">
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                                    {regularArticles.map((article) => (
+                                    {regularArticles.map((article: any) => (
                                         <Link href={`/blogs/${article.slug}`} key={article.id} className="group relative flex flex-col rounded-[24px] overflow-hidden bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] backdrop-blur-xl hover:border-[#D4A017]/40 transition-all duration-500 hover:shadow-[0_20px_50px_-15px_rgba(212,160,23,0.15)] hover:-translate-y-1">
                                             <div className="relative w-full h-[240px] overflow-hidden">
                                                 <Image src={article.image} alt={article.title} fill className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105" unoptimized />
