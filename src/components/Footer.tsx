@@ -80,9 +80,14 @@ export default function Footer() {
 
                     {/* Copyright & Socials */}
                     <div className="flex flex-col-reverse sm:flex-row items-center gap-6 lg:gap-12 w-full lg:w-auto justify-between lg:justify-end">
-                        <span className="text-[12px] text-white/30 font-light tracking-wide uppercase">
-                            © {new Date().getFullYear()} Aptech Lab. All rights reserved.
-                        </span>
+                        <div className="flex flex-col items-start gap-1 text-center sm:text-left">
+                            <span className="text-[12px] text-white/30 font-light tracking-wide uppercase">
+                                © {new Date().getFullYear()} Aptech Lab. All rights reserved.
+                            </span>
+                            <span className="text-[11px] text-[#D4A017]/70 font-medium tracking-wider uppercase mt-1">
+                                Made with Love by Bikal
+                            </span>
+                        </div>
 
                         {/* Social Icons Placeholder */}
                         <div className="flex items-center gap-4">
