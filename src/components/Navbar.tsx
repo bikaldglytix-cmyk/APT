@@ -12,6 +12,7 @@ const NAV_LINKS = [
     { name: "Teams", href: "/teams" },
     { name: "Careers", href: "/careers" },
     { name: "Blogs", href: "/blogs" },
+    { name: "News", href: "/news" },
 ];
 
 export default function Navbar() {

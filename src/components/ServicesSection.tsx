@@ -1,31 +1,12 @@
-"use client";
-
 import React from "react";
+import { supabase, normalizeService } from "@/lib/supabase";
 
-const services = [
-    {
-        num: "01",
-        title: "Market Intelligence",
-        description: "Deep-tier policy analysis and multi-variable feasibility studies to construct empirical clarity.",
-    },
-    {
-        num: "02",
-        title: "Climate Advisory",
-        description: "Navigating complex socio-ecological environments to unlock robust institutional capital.",
-    },
-    {
-        num: "03",
-        title: "Community Mobilization",
-        description: "Executing on the ground with deployment of appropriate technologies for localized impact.",
-    },
-    {
-        num: "04",
-        title: "Policy Architecture",
-        description: "Shaping sustainable climate finance and macro-environmental strategies at the ecosystem level.",
-    }
-];
+export default async function ServicesSection() {
+    const { data } = await supabase.from('services').select('*').order('num', { ascending: true });
+    const services = (data || []).map(normalizeService).filter(Boolean);
 
-export default function ServicesSection() {
+    if (services.length === 0) return null;
+
     return (
         <section id="services" className="relative w-full bg-[#DCEAE0] text-[#111111] pt-32 pb-40 px-6 sm:px-8">
             <div className="max-w-[1400px] mx-auto">

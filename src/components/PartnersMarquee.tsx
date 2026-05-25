@@ -2,16 +2,19 @@
 
 import React from "react";
 
-const partners = [
-    "CLIMATE ACTION NETWORK",
-    "GLOBAL CARBON VERIFIED",
-    "SUSTAINABLE AGRI ALLIANCE",
-    "BIOCHAR INITIATIVES",
-    "NEPAL RURAL DEV",
-    "ENVIRONMENTAL RECOVERY",
-];
+export default function PartnersMarquee({ partners }: { partners: any[] }) {
+    // Fallback if no partners in DB yet
+    const displayPartners = partners.length > 0 
+        ? partners.map(p => p.name) 
+        : [
+            "CLIMATE ACTION NETWORK",
+            "GLOBAL CARBON VERIFIED",
+            "SUSTAINABLE AGRI ALLIANCE",
+            "BIOCHAR INITIATIVES",
+            "NEPAL RURAL DEV",
+            "ENVIRONMENTAL RECOVERY",
+        ];
 
-export default function PartnersMarquee() {
     return (
         <section className="relative w-full py-12 bg-[#0A1810] overflow-hidden border-y border-white/5 flex items-center">
             {/* Subtle Gradient Overlays for Marquee edges */}
@@ -23,7 +26,7 @@ export default function PartnersMarquee() {
                 {/* Duplicate the items multiple times for seamless scrolling */}
                 {[...Array(3)].map((_, i) => (
                     <div key={i} className="flex items-center gap-12 sm:gap-24 px-6 sm:px-12">
-                        {partners.map((partner, index) => (
+                        {displayPartners.map((partner, index) => (
                             <div key={index} className="flex items-center gap-4 group">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#D4A017]/40 group-hover:bg-[#D4A017] transition-colors duration-300" />
                                 <span className="text-white/40 text-[13px] sm:text-[15px] font-[700] tracking-[0.2em] uppercase group-hover:text-white/90 transition-colors duration-300 cursor-default">

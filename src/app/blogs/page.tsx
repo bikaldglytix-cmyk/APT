@@ -1,16 +1,18 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
+import { supabase, normalizeArticle } from "@/lib/supabase";
 
-const articles: any[] = [];
+export const revalidate = 60; // ISR: revalidate every 60 seconds
 
-export default function BlogPage() {
-    const featuredArticle = articles.find(a => a.featured) || articles[0];
-    const regularArticles = articles.length > 0 && featuredArticle ? articles.filter(a => a.id !== featuredArticle.id) : [];
+export default async function BlogPage() {
+    const { data } = await supabase.from('blogs').select('*').order('created_at', { ascending: false });
+    const articles = (data || []).map(normalizeArticle).filter(Boolean);
+
+    const featuredArticle = articles.find(a => a?.featured) || articles[0];
+    const regularArticles = articles.length > 0 && featuredArticle ? articles.filter(a => a?.id !== featuredArticle.id) : [];
 
     return (
         <main className="w-full min-h-screen font-sans flex flex-col overflow-x-hidden bg-[#112419]">
@@ -64,7 +66,7 @@ export default function BlogPage() {
                         <section className="relative w-full bg-[#DCEAE0] py-20 sm:py-32 px-6 sm:px-8">
                             <div className="max-w-[1400px] mx-auto relative z-10">
                                 <div className="w-full flex flex-col lg:flex-row gap-12 lg:gap-16 items-center bg-white border border-[#CDD8D1] rounded-[32px] overflow-hidden p-6 sm:p-10 group hover:shadow-[0_30px_60px_-15px_rgba(58,90,64,0.15)] hover:border-[#3A5A40]/30 transition-all duration-700">
-                                    <Link href="/blogs" className="w-full lg:w-1/2 relative h-[350px] sm:h-[450px] rounded-[24px] overflow-hidden block">
+                                    <Link href={`/blogs/${featuredArticle.slug}`} className="w-full lg:w-1/2 relative h-[350px] sm:h-[450px] rounded-[24px] overflow-hidden block">
                                         <Image src={featuredArticle.image} alt={featuredArticle.title} fill className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105" unoptimized />
                                         <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500" />
                                         <div className="absolute top-6 left-6 px-4 py-2 rounded-full bg-white/90 backdrop-blur-md shadow-sm border border-[#CDD8D1] z-10">
@@ -80,7 +82,7 @@ export default function BlogPage() {
                                                 {featuredArticle.readTime}
                                             </span>
                                         </div>
-                                        <Link href="/blogs" className="block w-full">
+                                        <Link href={`/blogs/${featuredArticle.slug}`} className="block w-full">
                                             <h2 className="text-[32px] sm:text-[44px] font-[600] tracking-tight text-[#111111] mb-6 leading-[1.1] hover:text-[#3A5A40] transition-colors duration-300">
                                                 {featuredArticle.title}
                                             </h2>
@@ -98,7 +100,7 @@ export default function BlogPage() {
                             <div className="max-w-[1400px] mx-auto relative z-10">
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                                     {regularArticles.map((article) => (
-                                        <Link href="/blogs" key={article.id} className="group relative flex flex-col rounded-[24px] overflow-hidden bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] backdrop-blur-xl hover:border-[#D4A017]/40 transition-all duration-500 hover:shadow-[0_20px_50px_-15px_rgba(212,160,23,0.15)] hover:-translate-y-1">
+                                        <Link href={`/blogs/${article.slug}`} key={article.id} className="group relative flex flex-col rounded-[24px] overflow-hidden bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.05)] backdrop-blur-xl hover:border-[#D4A017]/40 transition-all duration-500 hover:shadow-[0_20px_50px_-15px_rgba(212,160,23,0.15)] hover:-translate-y-1">
                                             <div className="relative w-full h-[240px] overflow-hidden">
                                                 <Image src={article.image} alt={article.title} fill className="object-cover transition-transform duration-[1.5s] ease-out group-hover:scale-105" unoptimized />
                                                 <div className="absolute inset-0 bg-[#112419]/20 group-hover:bg-transparent transition-colors duration-500" />

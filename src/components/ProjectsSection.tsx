@@ -3,24 +3,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 
-const projects = [
-    {
-        id: 1,
-        title: "Biochar",
-        category: "FLAGSHIP PROJECT",
-        description: "From open burning to carbon removal systems, our pilot is transforming waste into value. Farmers convert biomass into biochar instead of open burning. Carbon is removed and stored in soil, generating carbon credits. A structured system (SOP + ICS + MRV) ensures scalability and certification readiness. Women-led cooperative model drives local ownership and long-term sustainability.",
-        image: "/works/biochar.jpg",
-        location: "Kavre, Nepal",
-        metrics: [
-            { value: "SOP+MRV", label: "STRUCTURED SYSTEM" },
-            { value: "CO2", label: "CARBON REMOVAL" }
-        ]
-    }
-];
-
-export default function ProjectsSection() {
+export default function ProjectsSection({ projects }: { projects: any[] }) {
     const [activeIndex, setActiveIndex] = useState(0);
     const activeProject = projects[activeIndex];
+
+    if (!activeProject) return null;
 
     return (
         <section className="relative w-full min-h-[100vh] lg:min-h-[800px] flex flex-col justify-center overflow-hidden bg-black py-24">

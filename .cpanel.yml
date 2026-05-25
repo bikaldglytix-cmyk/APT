@@ -1,6 +1,7 @@
 ---
 deployment:
   tasks:
-    - export DEPLOYPATH=/home/aptechla/public_html/
-    - /bin/rm -rf $DEPLOYPATH/*
-    - /bin/cp -R out/. $DEPLOYPATH
+    # Remove DEPLOYPATH if you are using cPanel Node.js App selector, as it runs from the repo root
+    - /usr/bin/npm ci
+    - /usr/bin/npm run build
+    - touch tmp/restart.txt

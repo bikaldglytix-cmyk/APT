@@ -1,13 +1,12 @@
-"use client";
-
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { supabase, normalizeArticle } from "@/lib/supabase";
 
-const articles: any[] = [];
+export default async function ReadsSection() {
+    const { data } = await supabase.from('blogs').select('*').order('created_at', { ascending: false }).limit(3);
+    const articles = (data || []).map(normalizeArticle).filter(Boolean);
 
-
-export default function ReadsSection() {
     const featuredArticle = articles[0];
     const sideArticles = articles.slice(1);
 
@@ -64,7 +63,7 @@ export default function ReadsSection() {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 lg:gap-8 min-h-[600px]">
 
                         {/* Left: Featured Large Article */}
-                        <Link href="/blog" className="lg:col-span-2 group relative rounded-[24px] overflow-hidden block h-full min-h-[500px] border border-white/[0.05] hover:border-[#D4A017]/50 transition-all duration-700 hover:shadow-[0_0_80px_-10px_rgba(212,160,23,0.3)]">
+                        <Link href={`/blogs/${featuredArticle.slug}`} className="lg:col-span-2 group relative rounded-[24px] overflow-hidden block h-full min-h-[500px] border border-white/[0.05] hover:border-[#D4A017]/50 transition-all duration-700 hover:shadow-[0_0_80px_-10px_rgba(212,160,23,0.3)]">
                             <Image
                                 src={featuredArticle.image}
                                 alt={featuredArticle.title}
@@ -119,7 +118,7 @@ export default function ReadsSection() {
                         {/* Right: Stacked Articles */}
                         <div className="flex flex-col gap-6 lg:gap-8">
                             {sideArticles.map((article) => (
-                                <Link href="/blogs" key={article.id} className="group relative flex-1 rounded-[24px] overflow-hidden bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl hover:border-[#D4A017]/50 transition-all duration-500 hover:shadow-[0_12px_40px_-10px_rgba(212,160,23,0.25)] hover:-translate-y-1 hover:bg-white/[0.04]">
+                                <Link href={`/blogs/${article.slug}`} key={article.id} className="group relative flex-1 rounded-[24px] overflow-hidden bg-white/[0.02] border border-white/[0.05] backdrop-blur-xl hover:border-[#D4A017]/50 transition-all duration-500 hover:shadow-[0_12px_40px_-10px_rgba(212,160,23,0.25)] hover:-translate-y-1 hover:bg-white/[0.04]">
                                     {/* Glass shine effect inner */}
                                     <div className="absolute inset-0 bg-gradient-to-br from-white/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 

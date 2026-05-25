@@ -3,9 +3,7 @@
 import React from "react";
 import Link from "next/link";
 
-const positions: any[] = [];
-
-export default function CareersPositions() {
+export default function CareersPositions({ positions }: { positions: any[] }) {
     return (
         <section id="open-positions" className="relative w-full py-28 sm:py-40 bg-[#112419] overflow-hidden">
             {/* Ambient glows */}
