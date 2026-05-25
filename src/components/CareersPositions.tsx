@@ -22,7 +22,7 @@ export default function CareersPositions({ positions }: { positions: any[] }) {
                 </div>
 
                 <div className="flex flex-col w-full border-t border-[rgba(255,255,255,0.1)]">
-                    {positions.map((pos, idx) => (
+                    {positions.map((pos: any, idx: number) => (
                         <div
                             key={idx}
                             className="group flex flex-col md:flex-row items-start md:items-center justify-between py-8 border-b border-[rgba(255,255,255,0.06)] hover:bg-[rgba(255,255,255,0.02)] transition-colors px-6 -mx-6 rounded-lg cursor-pointer"

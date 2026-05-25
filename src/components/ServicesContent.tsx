@@ -107,7 +107,7 @@ export default function ServicesContent({ services }: { services: any[] }) {
     }, []);
 
     // Merge DB services with some hardcoded aesthetics if possible
-    const fullServices = services.map((s, idx) => ({
+    const fullServices = services.map((s: any, idx: number) => ({
         ...s,
         tagline: s.tagline || "Impact & Growth",
         details: s.details || "Leveraging robust frameworks to drive scalable results across sectors.",
@@ -218,7 +218,7 @@ export default function ServicesContent({ services }: { services: any[] }) {
 
                     {/* Service Cards — premium light theme */}
                     <div className="flex flex-col w-full gap-8 lg:gap-16 mt-16">
-                        {fullServices.map((service, index) => (
+                        {fullServices.map((service: any, index: number) => (
                             <div
                                 key={service.id || index}
                                 className={`group flex flex-col ${index % 2 !== 0 ? 'lg:flex-row-reverse' : 'lg:flex-row'} w-full bg-white border border-[#CDD8D1] rounded-[32px] overflow-hidden hover:border-[#3A5A40]/40 transition-all duration-700 hover:shadow-[0_20px_50px_rgba(58,90,64,0.15)]`}

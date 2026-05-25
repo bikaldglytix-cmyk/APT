@@ -13,7 +13,7 @@ export default function ProjectsSection({ projects }: { projects: any[] }) {
         <section className="relative w-full min-h-[100vh] lg:min-h-[800px] flex flex-col justify-center overflow-hidden bg-black py-24">
 
             {/* Full Viewport Background Imagery */}
-            {projects.map((project, index) => (
+            {projects.map((project: any, index: number) => (
                 <div
                     key={project.id}
                     className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${activeIndex === index ? "opacity-100 z-0" : "opacity-0 z-0 pointer-events-none"
@@ -65,7 +65,7 @@ export default function ProjectsSection({ projects }: { projects: any[] }) {
 
                             {/* Embedded Thumbnails Navigation */}
                             <div className="w-full flex gap-4 overflow-x-auto pb-4 scrollbar-hide pointer-events-auto">
-                                {projects.map((project, index) => (
+                                {projects.map((project: any, index: number) => (
                                     <button
                                         key={project.id}
                                         onClick={() => setActiveIndex(index)}
@@ -97,7 +97,7 @@ export default function ProjectsSection({ projects }: { projects: any[] }) {
 
                     {/* Right Metrics Stack */}
                     <div className="w-full lg:w-[30%] flex flex-row lg:flex-col gap-8 lg:gap-16 justify-end items-start lg:items-end min-h-[200px]">
-                        {activeProject.metrics.map((metric, i) => (
+                        {activeProject.metrics.map((metric: any, i: number) => (
                             <div key={i} className="flex flex-col items-start lg:items-end animate-fade-in-up" style={{ animationDelay: `${i * 100}ms` }}>
                                 <div className="text-[#D4A017] text-[40px] lg:text-[56px] font-semibold leading-none mb-2">
                                     {metric.value}

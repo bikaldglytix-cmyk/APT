@@ -26,7 +26,7 @@ export default function PartnersMarquee({ partners }: { partners: any[] }) {
                 {/* Duplicate the items multiple times for seamless scrolling */}
                 {[...Array(3)].map((_, i) => (
                     <div key={i} className="flex items-center gap-12 sm:gap-24 px-6 sm:px-12">
-                        {displayPartners.map((partner, index) => (
+                        {displayPartners.map((partner: any, index: number) => (
                             <div key={index} className="flex items-center gap-4 group">
                                 <span className="w-1.5 h-1.5 rounded-full bg-[#D4A017]/40 group-hover:bg-[#D4A017] transition-colors duration-300" />
                                 <span className="text-white/40 text-[13px] sm:text-[15px] font-[700] tracking-[0.2em] uppercase group-hover:text-white/90 transition-colors duration-300 cursor-default">

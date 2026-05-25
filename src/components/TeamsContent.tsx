@@ -130,7 +130,7 @@ export default function TeamsContent({ leadership, coreTeam }: { leadership: any
                     </div>
 
                     <div className="flex w-full max-w-4xl mx-auto flex-col gap-10">
-                        {leadership.map((person, idx) => (
+                        {leadership.map((person: any, idx: number) => (
                             <LeaderCard key={person.id || person.name} person={person} index={idx} />
                         ))}
                     </div>
@@ -158,7 +158,7 @@ export default function TeamsContent({ leadership, coreTeam }: { leadership: any
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-5xl mx-auto">
-                        {coreTeam.map((member, idx) => (
+                        {coreTeam.map((member: any, idx: number) => (
                             <TeamCard key={member.id || member.name} member={member} index={idx} />
                         ))}
                     </div>

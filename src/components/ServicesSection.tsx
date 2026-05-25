@@ -30,7 +30,7 @@ export default async function ServicesSection() {
 
                 {/* Editorial Pillar Rows */}
                 <div className="flex flex-col w-full border-t border-[#CDD8D1]">
-                    {services.map((service, index) => (
+                    {services.map((service: any, index: number) => (
                         <div
                             key={index}
                             className="group flex flex-col lg:flex-row w-full border-b border-[#CDD8D1] py-12 lg:py-16 items-start lg:items-center relative transition-all duration-500 hover:bg-[#E1E8E4] px-4 rounded-xl -mx-4 overflow-hidden cursor-pointer hover:shadow-sm"
