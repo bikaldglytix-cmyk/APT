@@ -1,0 +1,51 @@
+name: Deploy to cPanel
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies (GitHub Server)
+        run: npm ci
+
+      - name: Build Next.js App (GitHub Server)
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SUPABASE_URL: ${{ secrets.NEXT_PUBLIC_SUPABASE_URL }}
+          NEXT_PUBLIC_SUPABASE_ANON_KEY: ${{ secrets.NEXT_PUBLIC_SUPABASE_ANON_KEY }}
+
+      - name: Sync files to cPanel via rsync
+        env:
+          CPANEL_PASSWORD: ${{ secrets.CPANEL_PASSWORD }}
+        run: |
+          sudo apt-get install sshpass -y
+          sshpass -p "$CPANEL_PASSWORD" rsync -avz --delete \
+            --exclude '.git' \
+            --exclude '.github' \
+            -e "ssh -o StrictHostKeyChecking=no -p 21098" \
+            ./ aptechla@${{ secrets.CPANEL_HOST }}:/home2/aptechla/aptechlabfinal/
+
+      - name: Restart cPanel Node.js Server
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.CPANEL_HOST }}
+          username: ${{ secrets.CPANEL_USERNAME }}
+          password: ${{ secrets.CPANEL_PASSWORD }}
+          port: 21098
+          script: |
+            touch /home2/aptechla/aptechlabfinal/tmp/restart.txt
+            echo "Successfully restarted cPanel server!"
